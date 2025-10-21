@@ -1,0 +1,199 @@
+/* ========== Todo App Polished Styles ========== */
+:root{
+  --bg: #0f172a;           /* 背景：深蓝黑 */
+  --panel: #111827;        /* 面板底色 */
+  --panel-2: #0b1220;      /* 次级面板/行底色 */
+  --text: #e5e7eb;         /* 主文字 */
+  --muted: #94a3b8;        /* 次要文字 */
+  --brand: #22c55e;        /* 品牌绿 */
+  --danger: #ef4444;       /* 危险/删除 */
+  --ring: rgba(56,189,248,.5); /* 聚焦高光 */
+  --border: rgba(148,163,184,.15);
+  --shadow: 0 10px 30px rgba(0,0,0,.35);
+  --radius: 16px;
+}
+
+/* 全局基线与字体渲染 */
+* { box-sizing: border-box; }
+html, body { height: 100%; }
+body{
+  margin: 0;
+  font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "Apple Color Emoji", "Segoe UI Emoji";
+  background: radial-gradient(1200px 600px at 10% -10%, #1f2937 0%, transparent 60%),
+              radial-gradient(1000px 500px at 110% 10%, #0b1020 0%, transparent 55%),
+              var(--bg);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  padding: 48px 16px;
+}
+
+/* 容器 */
+.todoapp{
+  max-width: 720px;
+  margin: 0 auto;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.04), transparent 40%),
+    linear-gradient(180deg, rgba(255,255,255,.02), transparent 60%),
+    var(--panel);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+}
+
+/* 头部 */
+.header{
+  padding: 28px 28px 16px;
+  position: relative;
+}
+.header h1{
+  margin: 0 0 14px;
+  font-size: 28px;
+  letter-spacing: .6px;
+  font-weight: 800;
+  background: linear-gradient(90deg, #fff, #9ae6b4 60%, #86efac);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+/* 输入框 */
+.new-todo{
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(255,255,255,.04), rgba(255,255,255,.02));
+  color: var(--text);
+  outline: none;
+  transition: box-shadow .2s ease, border-color .2s ease, transform .06s ease;
+}
+.new-todo::placeholder{
+  color: var(--muted);
+}
+.new-todo:focus{
+  border-color: rgba(56,189,248,.35);
+  box-shadow: 0 0 0 6px var(--ring);
+}
+.new-todo:active{
+  transform: translateY(1px);
+}
+
+/* 主体与列表 */
+.main{
+  padding: 6px 8px 12px;
+}
+.todo-list{
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 8px;
+}
+.todo-list li{
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.03), rgba(255,255,255,.01)),
+    var(--panel-2);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 0;
+  transition: transform .12s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.todo-list li:hover{
+  transform: translateY(-1px);
+  border-color: rgba(148,163,184,.3);
+  box-shadow: 0 10px 25px rgba(2,6,23,.35);
+}
+
+/* 行视图 */
+.view{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 16px;
+}
+.view label{
+  flex: 1;
+  color: var(--text);
+  line-height: 1.5;
+  word-break: break-word;
+}
+
+/* 删除按钮 */
+.destroy{
+  appearance: none;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+  color: var(--text);
+  border-radius: 10px;
+  padding: 8px 12px;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease, background .2s ease;
+}
+.destroy::before{
+  content: "✕";
+  font-weight: 700;
+  display: inline-block;
+}
+.destroy:hover{
+  border-color: rgba(239,68,68,.55);
+  background: linear-gradient(180deg, rgba(239,68,68,.18), rgba(239,68,68,.08));
+  box-shadow: 0 8px 20px rgba(239,68,68,.25);
+}
+.destroy:active{
+  transform: translateY(1px) scale(.98);
+}
+
+/* 底部统计 */
+.footer{
+  padding: 14px 20px 22px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  border-top: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(255,255,255,.02), transparent);
+}
+.todo-count{
+  color: var(--muted);
+}
+.todo-count strong{
+  color: var(--text);
+}
+
+/* 清空按钮 */
+.clear-completed{
+  appearance: none;
+  border: 1px solid var(--border);
+  background: linear-gradient(180deg, rgba(34,197,94,.18), rgba(34,197,94,.08));
+  color: #d1fae5;
+  border-radius: 10px;
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform .08s ease, box-shadow .2s ease, border-color .2s ease;
+}
+.clear-completed:hover{
+  border-color: rgba(34,197,94,.7);
+  box-shadow: 0 8px 22px rgba(34,197,94,.28);
+}
+.clear-completed:active{
+  transform: translateY(1px) scale(.98);
+}
+
+/* 可选：完成态（如果后续加上 done 类或属性时可用） */
+.todo-list li.completed .view label{
+  color: var(--muted);
+  text-decoration: line-through;
+  text-decoration-thickness: 2px;
+  text-decoration-color: rgba(148,163,184,.5);
+}
+
+/* 响应式优化 */
+@media (max-width: 640px){
+  .header{ padding: 22px 18px 12px; }
+  .main{   padding: 6px 6px 10px; }
+  .footer{ padding: 12px 14px 18px; }
+}

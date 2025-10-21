@@ -1,13 +1,19 @@
-<script setup></script>
-
 <template>
-  <div>
-    <h1>You did it!</h1>
-    <p>
-      Visit <a href="https://vuejs.org/" target="_blank" rel="noopener">vuejs.org</a> to read the
-      documentation
-    </p>
-  </div>
+<div>
+  <!-- 三元绑定 -->
+  <p :class = "isActive ? 'active': ''">Active1</p>
+  <!-- 对象语法绑定 -->
+  <p :class = "{active: isActive}">Active2</p>
+</div>
 </template>
 
-<style scoped></style>
+<script setup>
+    import { ref } from 'vue'
+    const isActive = ref(true)
+</script>
+
+<style scoped>
+.active{
+  color: red;
+}
+</style>
