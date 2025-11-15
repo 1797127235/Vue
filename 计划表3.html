@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>计划表 3</title>
+  <style>
+  :root { --accent: #3b82f6; }
+  body { margin: 0; font-family: system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", "PingFang SC", "Microsoft YaHei", sans-serif; background: #f7f7f8; }
+  .container { max-width: 680px; margin: 40px auto; background: #fff; border-radius: 16px; padding: 24px; box-shadow: 0 10px 24px rgba(0, 0, 0, 0.06); }
+  h1 { margin: 0 0 8px; font-size: 24px; }
+  .stats { margin-bottom: 16px; color: #555; }
+  .input-row { display: flex; gap: 8px; margin: 12px 0 20px; }
+  .input-row input { flex: 1; padding: 10px 12px; border: 1px solid #e5e7eb; border-radius: 10px; outline: none; }
+  .input-row input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.15); }
+  .input-row button { padding: 10px 14px; border: none; border-radius: 10px; background: var(--accent); color: #fff; cursor: pointer; transition: all 0.3s ease; }
+  .input-row button:hover { background: #2563eb; }
+  .input-row button:disabled { opacity: 0.5; cursor: not-allowed; }
+  ul { list-style: none; padding: 0; margin: 0; display: grid; gap: 10px; }
+  li { display: flex; align-items: center; justify-content: space-between; border: 1px solid #e5e7eb; border-radius: 12px; padding: 10px 12px; transition: all 0.3s ease; }
+  li:hover { box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); }
+  li .text { flex: 1; margin-right: 12px; }
+  li.done .text { color: #9ca3af; text-decoration: line-through; }
+  .actions { display: flex; gap: 8px; }
+  .actions button { border: 1px solid #e5e7eb; background: #fff; padding: 8px 10px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; }
+  .actions button:hover { background: #f9fafb; }
+  .actions .danger { border-color: #fda4af; color: #be123c; }
+  .actions .danger:hover { background: #fff1f2; }
+  .empty { text-align: center; color: #888; padding: 12px; }
+  </style>
+</head>
+<body>
+  <div id="app">
+    <div class="container">
+      <h1>计划表 3</h1>
+      <div class="input-row">
+        <input v-model.trim="newTask" @keyup.enter="addTask" placeholder="输入任务内容，回车或点击添加" aria-label="任务内容" />
+        <button @click="addTask" :disabled="!newTask">添加</button>
+      </div>
+      <div class="stats">总任务：{{ totalCount }} ｜ 已完成：{{ completedCount }}</div>
+      <ul>
+        <li v-for="(task, index) in tasks" :key="task.id" :class="{ done: task.done }">
+          <span class="text">{{ task.text }}</span>
+          <div class="actions">
+            <button @click="toggleDone(index)">{{ task.done ? '撤销完成' : '完成' }}</button>
+            <button class="danger" @click="removeTask(index)">删除</button>
+          </div>
+        </li>
+      </ul>
+      <div v-if="tasks.length === 0" class="empty">暂无任务，先添加一个吧～</div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
+  <script>
+  const { ref, computed, createApp } = Vue;
+  createApp({
+    setup() {
+      const newTask = ref('');
+      const tasks = ref([
+        { id: 1, text: '吃饭', done: false },
+        { id: 2, text: '睡觉', done: true }
+      ]);
+      const totalCount = computed(() => tasks.value.length);
+      const completedCount = computed(() => tasks.value.filter(t => t.done).length);
+      const addTask = () => {
+        const text = newTask.value.trim();
+        if (!text) return;
+        tasks.value.push({ id: Date.now(), text, done: false });
+        newTask.value = '';
+      };
+      const removeTask = (index) => { tasks.value.splice(index, 1); };
+      const toggleDone = (index) => { tasks.value[index].done = !tasks.value[index].done; };
+      return { newTask, tasks, totalCount, completedCount, addTask, removeTask, toggleDone };
+    }
+  }).mount('#app');
+  </script>
+</body>
+</html>
